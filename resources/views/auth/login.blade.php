@@ -111,12 +111,6 @@
                         </div>
                     </div>
 
-                    <div class="form-links">
-                        <a href="page-forgot-password.html">
-                            Lupa password?
-                        </a>
-                    </div>
-
                     <button type="submit" class="btn-login">
                         Masuk ke Akun
                     </button>

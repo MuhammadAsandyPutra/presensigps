@@ -184,7 +184,7 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {{request()->is(['/panel/karyawan', '/panel/departemen']) ? 'show' : ''}}" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{request()->is(['karyawan', 'departemen']) ? 'true' : ''}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -199,13 +199,13 @@
                             Data Master
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{request()->is('panel/karyawan', 'panel/departemen') ? 'show' : ''}}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="/panel/karyawan">
+                                <a class="dropdown-item {{request()->is('panel/karyawan') ? 'active' : ''}}" href="/panel/karyawan">
                                     Data Karyawan
                                 </a>
-                                <a class="dropdown-item" href="/panel/departemen">
+                                <a class="dropdown-item {{request()->is('panel/departemen') ? 'active' : ''}}" href="/panel/departemen">
                                     Data Departemen
                                 </a>
                             </div>
@@ -213,7 +213,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/panel/presensi/monitoring">
+                    <a class="nav-link {{request()->is('panel/presensi/monitoring') ? 'show' : ''}}" href="/panel/presensi/monitoring">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-heart-monitor">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -230,7 +230,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/panel/presensi/izinsakit">
+                    <a class="nav-link {{request()->is('panel/presensi/izinsakit') ? 'show' : ''}}" href="/panel/presensi/izinsakit">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-heart-monitor">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -247,7 +247,7 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {{request()->is('panel/presensi/laporan', 'panel/presensi/rekap') ? 'show' : ''}}" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{request()->is(['panel/presensi/laporan' , 'panel/presensi/rekap']) ? 'true' : ''}}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-report">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -264,13 +264,13 @@
                             Laporan
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{request()->is('panel/presensi/*') ? 'show' : ''}}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="/panel/presensi/laporan">
+                                <a class="dropdown-item {{request()->is('panel/presensi/laporan') ? 'active' : ''}}" href="/panel/presensi/laporan">
                                     Laporan Presensi
                                 </a>
-                                <a class="dropdown-item" href="/panel/presensi/rekap">
+                                <a class="dropdown-item {{request()->is('panel/presensi/rekap') ? 'active' : ''}}" href="/panel/presensi/rekap">
                                     Rekap Presensi
                                 </a>
                             </div>
@@ -278,7 +278,7 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {{request()->is('panel/konfigurasi/lokasikantor') ? 'show' : ''}}" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -290,11 +290,18 @@
                             Konfigurasi
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{request()->is('panel/konfigurasi/lokasikantor') ? 'show' : ''}}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="/panel/konfigurasi/lokasikantor">
+                                <a class="dropdown-item {{request()->is('panel/konfigurasi/lokasikantor') ? 'active' : ''}}" href="/panel/konfigurasi/lokasikantor">
                                     Lokasi Kantor
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{request()->is('panel/konfigurasi/jamkerja') ? 'active' : ''}}" href="/panel/konfigurasi/jamkerja">
+                                    Jam Kerja
                                 </a>
                             </div>
                         </div>

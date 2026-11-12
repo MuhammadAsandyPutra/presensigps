@@ -24,7 +24,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="/panel/presensi/cetakrekap" target="_blank" method="POST">@csrf
+                        <form action="/panel/presensi/cetakrekap" method="POST">@csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group"><select name="bulan" id="bulan" class="form-select">

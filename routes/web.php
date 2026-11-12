@@ -93,6 +93,8 @@ Route::prefix('panel')->middleware(['auth:user'])->group(function () {
     //konfigurasi
     Route::get('/konfigurasi/lokasikantor', [KonfigurasiController::class, 'lokasikantor']);
     Route::post('/konfigurasi/updatelokasikantor', [KonfigurasiController::class, 'updatelokasikantor']);
+    //Jam Kerja
+    Route::get('/konfigurasi/jamkerja', [KonfigurasiController::class, 'jamkerja']);
 
     //Izin || Sakit
     Route::get('/presensi/izinsakit', [PresensiController::class, 'izinsakit']);

@@ -82,7 +82,7 @@
         jpeg_quality: 80,
         constraints: {
             facingMode: {
-                ideal: 'environment'
+                ideal: 'user'
             }
         },
     });

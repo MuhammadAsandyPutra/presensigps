@@ -24,7 +24,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="/panel/presensi/cetaklaporan" target="_blank" method="POST">@csrf
+                        <form action="/panel/presensi/cetaklaporan" target="_blank" method="POST" id="frmLaporan">@csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group"><select name="bulan" id="bulan" class="form-select">
@@ -102,3 +102,46 @@
     </div>
 </div>
 @endsection
+
+@push('myscript')
+<script>
+    $('#frmLaporan').submit(function() {
+
+        var bulan = $('#bulan').val()
+        var tahun = $('#tahun').val()
+        var nik = $('#nik').val()
+
+
+        if (nik == "") {
+            Swal.fire({
+                title: "Ooops...!",
+                text: "NIK Harus Diisi !",
+                icon: "warning",
+                confirmButtonText: "Kembali"
+            }).then((result) => {
+                $('#nik').focus();
+            });
+            return false;
+
+        } else if (bulan == "") {
+            Swal.fire({
+                title: "Ooops...!",
+                text: "Bulan Harus Diisi !",
+                icon: "warning",
+                confirmButtonText: "Kembali"
+            }).then((result) => {
+                $('#nik').focus();
+            });
+        } else if (tahun == "") {
+            Swal.fire({
+                title: "Ooops...!",
+                text: "Tahun Harus Diisi !",
+                icon: "warning",
+                confirmButtonText: "Kembali"
+            }).then((result) => {
+                $('#nik').focus();
+            });
+        }
+    })
+</script>
+@endpush

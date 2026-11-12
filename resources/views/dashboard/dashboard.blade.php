@@ -1,23 +1,128 @@
 @extends('layouts.presensi')
 @section('content')
+
+<style>
+    .logout {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+
+        color: #fff;
+        font-size: 22px;
+        text-decoration: none;
+
+        transition: all 0.2s ease;
+    }
+
+    .logout:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    #user-section {
+        position: relative;
+        padding: 25px 20px;
+        background: linear-gradient(135deg, #e5e16e, #44d18d);
+        border-radius: 0 0 25px 25px;
+        margin-top: -1px;
+    }
+
+    #user-detail {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-top: 10px;
+    }
+
+    #user-detail .avatar {
+        width: 65px;
+        height: 65px;
+        flex-shrink: 0;
+        border: 3px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    #user-detail .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    #user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-right: 35px;
+    }
+
+    #user-name {
+        color: white;
+        font-size: 17px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    #user-role {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .logout {
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        z-index: 999;
+    }
+</style>
 <!-- App Capsule -->
 <div id="appCapsule">
     <div class="section" id="user-section">
+
+        <a href="/proseslogout" class="logout">
+            <ion-icon name="log-out-outline"></ion-icon>
+        </a>
+
         <div id="user-detail">
+
             <div class="avatar">
-                @if(!empty(Auth::guard('karyawan')->user()->foto));
+                @if(!empty(Auth::guard('karyawan')->user()->foto))
                 @php
-                $path = Storage::url('/uploads/karyawan/'.Auth::guard('karyawan')->user()->foto);
+                $path = Storage::url('/uploads/karyawan/' . Auth::guard('karyawan')->user()->foto);
                 @endphp
-                <img src="{{ url($path) }}" alt="avatar" class="imaged w64 rounded">
+
+                <img src="{{ url($path) }}" alt="Foto Profil">
                 @else
-                <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+                <img src="{{ asset('assets/img/sample/avatar/avatar1.jpg') }}" alt="Foto Profil">
                 @endif
             </div>
+
             <div id="user-info">
-                <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap}}</h2>
-                <span id="user-role">{{ Auth::guard('karyawan')->user()->jabatan}}</span>
+                <h2 id="user-name">
+                    {{ Auth::guard('karyawan')->user()->nama_lengkap }}
+                </h2>
+
+                <span id="user-role">
+                    {{ Auth::guard('karyawan')->user()->jabatan }}
+                </span>
             </div>
+
         </div>
     </div>
 

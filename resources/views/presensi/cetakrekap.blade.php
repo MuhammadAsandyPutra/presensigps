@@ -364,11 +364,6 @@
     12 => 'Desember'
     ];
     @endphp
-
-    <button class="tombol-cetak" onclick="window.print()">
-        Cetak Laporan
-    </button>
-
     <section class="sheet">
 
         <!-- KOP PERUSAHAAN -->
