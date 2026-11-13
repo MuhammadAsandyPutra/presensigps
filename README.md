@@ -1,104 +1,136 @@
-# PresensiGPS – BPRS Barkah Gemadana Banjarmasin
+# PresensiGPS
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo">
+  <strong>GPS-Based Employee Attendance Management System</strong>
+  <br />
+  Sistem Informasi Presensi Karyawan
+  <br /><br />
+  <strong>PT BPRS Barkah Gemadana Banjarmasin</strong>
 </p>
 
 <p align="center">
-  **Sistem Informasi Presensi Karyawan Berbasis GPS**
+  <img src="https://img.shields.io/badge/Laravel-Framework-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/PHP-Backend-777BB4?style=for-the-badge&logo=php&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-Frontend-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
 </p>
 
 ---
 
-## Tentang PresensiGPS
+## Overview
 
-**PresensiGPS** merupakan aplikasi berbasis web yang dikembangkan untuk mendukung proses pengelolaan kehadiran karyawan di **PT BPRS Barkah Gemadana Banjarmasin**.
+**PresensiGPS** is a web-based employee attendance management system developed for **PT BPRS Barkah Gemadana Banjarmasin**.
 
-Aplikasi ini dirancang untuk mempermudah proses pencatatan, pemantauan, dan pengelolaan presensi karyawan dengan memanfaatkan teknologi Global Positioning System (GPS) untuk memvalidasi lokasi saat karyawan melakukan presensi.
+Designed to streamline employee attendance processes, PresensiGPS integrates GPS-based location validation with centralized attendance management, providing a more efficient, structured, and accessible solution for daily workforce administration.
 
-Selain pencatatan kehadiran, aplikasi ini juga menyediakan fitur administrasi untuk membantu pengelolaan data karyawan, perizinan, serta laporan presensi secara terpusat.
+The system helps employees record their attendance while enabling administrators to monitor attendance activities, manage employee records, process leave requests, and generate attendance reports through an integrated dashboard.
 
-## Fitur Utama
+## ✨ Key Features
 
-### 1. Presensi Karyawan
-- Pencatatan presensi masuk dan pulang.
-- Validasi lokasi presensi menggunakan GPS.
-- Pencatatan waktu kehadiran karyawan.
-- Pemantauan riwayat presensi.
-
-### 2. Pengelolaan Data Karyawan
-- Manajemen data karyawan.
-- Pengelolaan informasi dan akun karyawan.
-- Pengaturan data karyawan oleh administrator.
-
-### 3. Pengajuan Izin dan Sakit
-- Pengajuan izin dan sakit secara online.
-- Pengelolaan data pengajuan izin.
-- Pemantauan status pengajuan oleh administrator.
-
-### 4. Dashboard Administrator
-- Ringkasan data presensi karyawan.
-- Monitoring kehadiran karyawan.
-- Pengelolaan data karyawan.
-- Pengelolaan data izin dan sakit.
-
-### 5. Laporan Presensi
-- Rekapitulasi presensi karyawan.
-- Laporan kehadiran berdasarkan periode.
-- Penyajian data presensi untuk kebutuhan administrasi dan evaluasi.
-
-## Teknologi yang Digunakan
-
-| Teknologi | Kegunaan |
+| Feature | Description |
 |---|---|
-| PHP | Bahasa pemrograman backend |
-| Laravel | Backend web framework |
-| MySQL / MariaDB | Database management system |
-| JavaScript | Interaksi pada antarmuka |
-| AJAX | Komunikasi data asynchronous |
-| HTML5 & CSS3 | Struktur dan tampilan aplikasi |
-| Bootstrap | Framework antarmuka |
-| GPS Geolocation API | Validasi lokasi presensi |
+| 📍 GPS-Based Attendance | Location-based validation for employee check-in and check-out. |
+| 🕒 Attendance Tracking | Records attendance timestamps and employee attendance history. |
+| 👥 Employee Management | Centralized employee information and account management. |
+| 📝 Leave Management | Online leave and sick-day submissions and administration. |
+| 📊 Admin Dashboard | Attendance overview and employee monitoring. |
+| 📑 Attendance Reports | Structured attendance recaps and reporting by period. |
 
-## Struktur Aplikasi
+## 🛠️ Tech Stack
 
-Aplikasi ini dikembangkan menggunakan arsitektur Laravel dengan pendekatan Model-View-Controller (MVC).
+**Backend**
+- PHP
+- Laravel Framework
 
-- **Models** – Mengelola representasi dan interaksi data dengan database.
-- **Views** – Menampilkan antarmuka aplikasi kepada pengguna.
-- **Controllers** – Mengelola logika bisnis dan alur pemrosesan aplikasi.
-- **Routes** – Mengatur endpoint dan navigasi aplikasi.
-- **Migrations** – Mengelola perubahan struktur database.
+**Frontend**
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap
+- AJAX
 
-## Instalasi dan Konfigurasi
+**Database**
+- MySQL / MariaDB
 
-### 1. Clone Repository
+**Location Services**
+- HTML5 Geolocation API
+- GPS Location Services
+
+## 🏗️ Application Architecture
+
+PresensiGPS follows the Model-View-Controller (MVC) architectural pattern provided by Laravel.
+
+```text
+PresensiGPS/
+│
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   └── Models/
+│
+├── bootstrap/
+├── config/
+├── database/
+│   ├── migrations/
+│   └── seeders/
+│
+├── public/
+│   ├── css/
+│   ├── js/
+│   └── assets/
+│
+├── resources/
+│   └── views/
+│
+├── routes/
+│   └── web.php
+│
+├── storage/
+├── tests/
+├── .env.example
+└── artisan
+```
+
+## 🚀 Getting Started
+
+Follow these steps to run PresensiGPS locally.
+
+### Prerequisites
+
+Make sure you have installed:
+
+- PHP
+- Composer
+- MySQL or MariaDB
+- Node.js and NPM (if frontend dependencies are required)
+
+### Installation
+
+**1. Clone the repository**
 
 ```bash
 git clone <repository-url>
 ```
 
-### 2. Masuk ke Direktori Project
+**2. Navigate to the project directory**
 
 ```bash
 cd presensigps
 ```
 
-### 3. Install Dependencies
+**3. Install dependencies**
 
 ```bash
 composer install
 ```
 
-### 4. Konfigurasi Environment
-
-Salin file `.env.example` menjadi `.env`.
+**4. Configure environment**
 
 ```bash
 cp .env.example .env
 ```
 
-Sesuaikan konfigurasi database pada file `.env`.
+Update your database configuration in `.env`:
 
 ```env
 APP_NAME=PresensiGPS
@@ -114,53 +146,61 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 5. Generate Application Key
+**5. Generate application key**
 
 ```bash
 php artisan key:generate
 ```
 
-### 6. Migrasi Database
+**6. Run database migrations**
 
 ```bash
 php artisan migrate
 ```
 
-### 7. Jalankan Aplikasi
+**7. Start the development server**
 
 ```bash
 php artisan serve
 ```
 
-Aplikasi dapat diakses melalui:
+Access the application at:
 
-```text
-http://127.0.0.1:8000
-```
+`http://127.0.0.1:8000`
 
-## Penggunaan Aplikasi
+## 👤 User Access
 
-Aplikasi memiliki dua jenis akses utama:
+**Employee Portal**
 
-- **Karyawan:** Digunakan untuk melakukan presensi masuk dan pulang, melihat riwayat kehadiran, serta mengajukan izin atau sakit.
-- **Administrator:** Digunakan untuk mengelola data karyawan, memantau aktivitas presensi, memproses pengajuan izin, dan melihat laporan kehadiran.
+Designed for employees to:
+- Perform attendance check-in and check-out.
+- View attendance history.
+- Submit leave and sick-day requests.
 
-## Tujuan Pengembangan
+**Administrator Portal**
 
-Pengembangan PresensiGPS bertujuan untuk:
+Designed for administrators to:
+- Manage employee information.
+- Monitor employee attendance.
+- Review leave and sick-day requests.
+- Generate attendance reports.
 
-1. Meningkatkan efisiensi proses administrasi kehadiran karyawan.
-2. Meminimalkan pencatatan presensi secara manual.
-3. Meningkatkan akurasi pencatatan waktu dan lokasi kehadiran.
-4. Mempermudah monitoring kehadiran karyawan.
-5. Menyediakan data presensi yang terstruktur untuk kebutuhan pelaporan perusahaan.
+## 🎯 Project Goals
+
+PresensiGPS aims to support the digital transformation of employee attendance administration by delivering:
+
+- Improved operational efficiency.
+- More accurate attendance records.
+- GPS-assisted attendance validation.
+- Centralized employee attendance management.
+- Simplified reporting and administrative workflows.
 
 ---
 
 <p align="center">
-  **PresensiGPS**
-  <br>
-  Sistem Informasi Presensi Karyawan
-  <br>
-  **PT BPRS Barkah Gemadana Banjarmasin**
+  <strong>PresensiGPS</strong>
+  <br />
+  Built to support smarter employee attendance management.
+  <br /><br />
+  <sub>© PT BPRS Barkah Gemadana Banjarmasin</sub>
 </p>
