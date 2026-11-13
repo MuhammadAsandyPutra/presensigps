@@ -121,6 +121,10 @@
                 <span id="user-role">
                     {{ Auth::guard('karyawan')->user()->jabatan }}
                 </span>
+                <br>
+                <br>
+                <span id="user-role">({{ Auth::guard('karyawan')->user()->kode_cabang }})
+                </span>
             </div>
 
         </div>

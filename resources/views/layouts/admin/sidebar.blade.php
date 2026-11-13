@@ -199,7 +199,7 @@
                             Data Master
                         </span>
                     </a>
-                    <div class="dropdown-menu {{request()->is('panel/karyawan', 'panel/departemen') ? 'show' : ''}}">
+                    <div class="dropdown-menu {{request()->is('panel/karyawan', 'panel/departemen', 'panel/cabang') ? 'show' : ''}}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{request()->is('panel/karyawan') ? 'active' : ''}}" href="/panel/karyawan">
@@ -207,6 +207,9 @@
                                 </a>
                                 <a class="dropdown-item {{request()->is('panel/departemen') ? 'active' : ''}}" href="/panel/departemen">
                                     Data Departemen
+                                </a>
+                                <a class="dropdown-item {{request()->is('panel/cabang') ? 'active' : ''}}" href="/panel/cabang">
+                                    Kantor Cabang
                                 </a>
                             </div>
                         </div>

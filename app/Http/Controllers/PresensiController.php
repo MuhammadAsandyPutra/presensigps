@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-use function Laravel\Prompts\select;
-
 class PresensiController extends Controller
 {
     public function create()
@@ -22,8 +20,9 @@ class PresensiController extends Controller
             ->where('tanggal_presensi', $hariini)
             ->where('nik', $nik)
             ->count();
-        $lok_kantor = DB::table('konfigurasi_lokasi')
-            ->where('id', 1)
+        $kode_cabang =  Auth::guard('karyawan')->user()->kode_cabang;
+        $lok_kantor = DB::table('cabang')
+            ->where('kode_cabang', $kode_cabang)
             ->first();
         return view('presensi.create', compact('cek', 'lok_kantor'));
     }
@@ -32,12 +31,13 @@ class PresensiController extends Controller
     {
 
         $nik = Auth::guard('karyawan')->user()->nik;
+        $kode_cabang = Auth::guard('karyawan')->user()->kode_cabang;
         $tgl_presensi = date('Y-m-d');
         $jam = date('H:i:s');
-        $lok_kantor = DB::table('konfigurasi_lokasi')
-            ->where('id', 1)
+        $lok_kantor = DB::table('cabang')
+            ->where('kode_cabang', $kode_cabang)
             ->first();
-        $lok = explode(",", $lok_kantor->lokasi_kantor);
+        $lok = explode(",", $lok_kantor->lokasi_cabang);
         $latitudekantor = $lok[0];
         $longitudekantor = $lok[1];
         $lokasi = $request->lokasi;
@@ -76,9 +76,9 @@ class PresensiController extends Controller
         ];
 
 
-        if ($radius > $lok_kantor->radius) {
+        if ($radius > $lok_kantor->radius_cabang) {
             return response(
-                'error|Di luar radius kantor. Jarak Anda: ' . $radius . ' meter dari kantor|radius'
+                'error|Di luar radius kantor. Jarak Anda: ' . $radius . ' kilometer dari kantor|radius'
             );
         } else {
             if ($cek > 0) {

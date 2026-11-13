@@ -32,7 +32,11 @@ class KaryawanController extends Controller
 
         $departemen = DB::table('departemen')
             ->get();
-        return view('karyawan.index', compact('karyawan', 'departemen'));
+
+        $cabang = DB::table('cabang')
+            ->orderBy('kode_cabang')
+            ->get();
+        return view('karyawan.index', compact('karyawan', 'departemen', 'cabang'));
     }
 
     public function store(Request $request)
@@ -43,6 +47,7 @@ class KaryawanController extends Controller
         $no_hp = $request->no_hp;
         $kode_dept = $request->kode_dept;
         $password = Hash::make('12345');
+        $kode_cabang = $request->kode_cabang;
 
         if ($request->hasFile('foto')) {
             $foto = $nik . '.' . $request->file('foto')->getClientOriginalExtension();
@@ -67,6 +72,7 @@ class KaryawanController extends Controller
                 'kode_dept' => $kode_dept,
                 'foto' => $foto,
                 'password' => $password,
+                'kode_cabang' => $kode_cabang,
             ];
 
             $simpan = DB::table('karyawan')
@@ -102,7 +108,10 @@ class KaryawanController extends Controller
         $departemen = DB::table('departemen')
             ->get();
         $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
-        return view('karyawan.edit', compact('departemen', 'karyawan'));
+        $cabang = DB::table('cabang')
+            ->orderBy('kode_cabang')
+            ->get();
+        return view('karyawan.edit', compact('departemen', 'karyawan', 'cabang'));
     }
 
     // public function update($nik, Request $request)
@@ -171,6 +180,7 @@ class KaryawanController extends Controller
             'no_hp' => 'required',
             'kode_dept' => 'required',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'kode_cabang' => 'required'
         ]);
 
         // Ambil data karyawan lama
@@ -211,6 +221,7 @@ class KaryawanController extends Controller
                 'no_hp' => $request->no_hp,
                 'kode_dept' => $request->kode_dept,
                 'foto' => $fotoBaru,
+                'kode_cabang' => $request->kode_cabang,
             ];
 
             // Update database
