@@ -1,58 +1,166 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PresensiGPS – BPRS Barkah Gemadana Banjarmasin
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<p align="center">
+  **Sistem Informasi Presensi Karyawan Berbasis GPS**
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tentang PresensiGPS
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**PresensiGPS** merupakan aplikasi berbasis web yang dikembangkan untuk mendukung proses pengelolaan kehadiran karyawan di **PT BPRS Barkah Gemadana Banjarmasin**.
 
-## Learning Laravel
+Aplikasi ini dirancang untuk mempermudah proses pencatatan, pemantauan, dan pengelolaan presensi karyawan dengan memanfaatkan teknologi Global Positioning System (GPS) untuk memvalidasi lokasi saat karyawan melakukan presensi.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Selain pencatatan kehadiran, aplikasi ini juga menyediakan fitur administrasi untuk membantu pengelolaan data karyawan, perizinan, serta laporan presensi secara terpusat.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Fitur Utama
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 1. Presensi Karyawan
+- Pencatatan presensi masuk dan pulang.
+- Validasi lokasi presensi menggunakan GPS.
+- Pencatatan waktu kehadiran karyawan.
+- Pemantauan riwayat presensi.
 
-## Agentic Development
+### 2. Pengelolaan Data Karyawan
+- Manajemen data karyawan.
+- Pengelolaan informasi dan akun karyawan.
+- Pengaturan data karyawan oleh administrator.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 3. Pengajuan Izin dan Sakit
+- Pengajuan izin dan sakit secara online.
+- Pengelolaan data pengajuan izin.
+- Pemantauan status pengajuan oleh administrator.
+
+### 4. Dashboard Administrator
+- Ringkasan data presensi karyawan.
+- Monitoring kehadiran karyawan.
+- Pengelolaan data karyawan.
+- Pengelolaan data izin dan sakit.
+
+### 5. Laporan Presensi
+- Rekapitulasi presensi karyawan.
+- Laporan kehadiran berdasarkan periode.
+- Penyajian data presensi untuk kebutuhan administrasi dan evaluasi.
+
+## Teknologi yang Digunakan
+
+| Teknologi | Kegunaan |
+|---|---|
+| PHP | Bahasa pemrograman backend |
+| Laravel | Backend web framework |
+| MySQL / MariaDB | Database management system |
+| JavaScript | Interaksi pada antarmuka |
+| AJAX | Komunikasi data asynchronous |
+| HTML5 & CSS3 | Struktur dan tampilan aplikasi |
+| Bootstrap | Framework antarmuka |
+| GPS Geolocation API | Validasi lokasi presensi |
+
+## Struktur Aplikasi
+
+Aplikasi ini dikembangkan menggunakan arsitektur Laravel dengan pendekatan Model-View-Controller (MVC).
+
+- **Models** – Mengelola representasi dan interaksi data dengan database.
+- **Views** – Menampilkan antarmuka aplikasi kepada pengguna.
+- **Controllers** – Mengelola logika bisnis dan alur pemrosesan aplikasi.
+- **Routes** – Mengatur endpoint dan navigasi aplikasi.
+- **Migrations** – Mengelola perubahan struktur database.
+
+## Instalasi dan Konfigurasi
+
+### 1. Clone Repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <repository-url>
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Masuk ke Direktori Project
 
-## Contributing
+```bash
+cd presensigps
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Install Dependencies
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Konfigurasi Environment
 
-## Security Vulnerabilities
+Salin file `.env.example` menjadi `.env`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+cp .env.example .env
+```
 
-## License
+Sesuaikan konfigurasi database pada file `.env`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```env
+APP_NAME=PresensiGPS
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=presensigps
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 6. Migrasi Database
+
+```bash
+php artisan migrate
+```
+
+### 7. Jalankan Aplikasi
+
+```bash
+php artisan serve
+```
+
+Aplikasi dapat diakses melalui:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Penggunaan Aplikasi
+
+Aplikasi memiliki dua jenis akses utama:
+
+- **Karyawan:** Digunakan untuk melakukan presensi masuk dan pulang, melihat riwayat kehadiran, serta mengajukan izin atau sakit.
+- **Administrator:** Digunakan untuk mengelola data karyawan, memantau aktivitas presensi, memproses pengajuan izin, dan melihat laporan kehadiran.
+
+## Tujuan Pengembangan
+
+Pengembangan PresensiGPS bertujuan untuk:
+
+1. Meningkatkan efisiensi proses administrasi kehadiran karyawan.
+2. Meminimalkan pencatatan presensi secara manual.
+3. Meningkatkan akurasi pencatatan waktu dan lokasi kehadiran.
+4. Mempermudah monitoring kehadiran karyawan.
+5. Menyediakan data presensi yang terstruktur untuk kebutuhan pelaporan perusahaan.
+
+---
+
+<p align="center">
+  **PresensiGPS**
+  <br>
+  Sistem Informasi Presensi Karyawan
+  <br>
+  **PT BPRS Barkah Gemadana Banjarmasin**
+</p>
