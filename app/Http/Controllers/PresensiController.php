@@ -12,9 +12,52 @@ use Illuminate\Support\Facades\Redirect;
 
 class PresensiController extends Controller
 {
+
+    public function gethari()
+    {
+        $hari = date("D");
+
+        switch ($hari) {
+            case 'sun':
+                $hari_ini = 'Minngu';
+                break;
+
+            case 'Mon':
+                $hari_ini = 'Senin';
+                break;
+
+            case 'Tue':
+                $hari_ini = 'Selasa';
+                break;
+
+            case 'Wed':
+                $hari_ini = 'Rabu';
+                break;
+
+            case 'Thu':
+                $hari_ini = 'Kamis';
+                break;
+
+            case 'Fri':
+                $hari_ini = 'Jumat';
+                break;
+
+            case 'Sat':
+                $hari_ini = 'Sabtu';
+                break;
+
+            default:
+                $hari_ini = 'Tidak diketahui';
+                break;
+        }
+        return $hari_ini;
+    }
+
     public function create()
     {
         $hariini = date('Y-m-d');
+        $namahari = $this->gethari();
+
         $nik = Auth::guard('karyawan')->user()->nik;
         $cek = DB::table('presensi')
             ->where('tanggal_presensi', $hariini)
@@ -24,7 +67,12 @@ class PresensiController extends Controller
         $lok_kantor = DB::table('cabang')
             ->where('kode_cabang', $kode_cabang)
             ->first();
-        return view('presensi.create', compact('cek', 'lok_kantor'));
+        $jamkerja = DB::table('konfigurasi_jamkerja')
+            ->join('jam_kerja', 'konfigurasi_jamkerja.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+            ->where('nik', $nik)
+            ->where('hari', $namahari)
+            ->first();
+        return view('presensi.create', compact('cek', 'lok_kantor', 'jamkerja'));
     }
 
     public function store(Request $request)
@@ -44,10 +92,16 @@ class PresensiController extends Controller
         $lokasiuser = explode(",", $lokasi);
         $latitudeuser = $lokasiuser[0];
         $longitudeuser = $lokasiuser[1];
+        $namahari = $this->gethari();
 
         $jarak = $this->distance($latitudekantor, $longitudekantor, $latitudeuser, $longitudeuser);
         $radius = round($jarak["meters"]);
 
+        $jamkerja = DB::table('konfigurasi_jamkerja')
+            ->join('jam_kerja', 'konfigurasi_jamkerja.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+            ->where('nik', $nik)
+            ->where('hari', $namahari)
+            ->first();
 
         $cek = DB::table('presensi')
             ->where('tanggal_presensi', $tgl_presensi)
@@ -78,41 +132,50 @@ class PresensiController extends Controller
 
         if ($radius > $lok_kantor->radius_cabang) {
             return response(
-                'error|Di luar radius kantor. Jarak Anda: ' . $radius . ' kilometer dari kantor|radius'
+                'error|Di luar radius kantor. Jarak Anda: ' . $radius . ' meter dari kantor|radius'
             );
         } else {
             if ($cek > 0) {
-
-                $data_pulang = [
-                    'jam_out' => $jam,
-                    'foto_out' => $fileName,
-                    'lokasi_out' => $lokasi,
-                ];
-                $update = DB::table('presensi')
-                    ->where('tanggal_presensi', $tgl_presensi)
-                    ->where('nik', $nik)
-                    ->update($data_pulang);
-                if ($update) {
-                    echo 'success|Terima kasih telah melakukan presensi pulang|out';
-                    Storage::disk('public')->put($file, $image_base64);
+                if ($jam < $jamkerja->jam_pulang) {
+                    echo 'error|Maaf Belum Waktunya Pulang|out';
                 } else {
-                    echo 'error|Maaf presensi pulang anda gagal, silahkan hubungi IT|out';
+                    $data_pulang = [
+                        'jam_out' => $jam,
+                        'foto_out' => $fileName,
+                        'lokasi_out' => $lokasi,
+                    ];
+                    $update = DB::table('presensi')
+                        ->where('tanggal_presensi', $tgl_presensi)
+                        ->where('nik', $nik)
+                        ->update($data_pulang);
+                    if ($update) {
+                        echo 'success|Terima kasih telah melakukan presensi pulang|out';
+                        Storage::disk('public')->put($file, $image_base64);
+                    } else {
+                        echo 'error|Maaf presensi pulang anda gagal, silahkan hubungi IT|out';
+                    }
                 }
             } else {
-                $data = [
-                    'nik' => $nik,
-                    'tanggal_presensi' => $tgl_presensi,
-                    'jam_in' => $jam,
-                    'foto_in' => $fileName,
-                    'lokasi_in' => $lokasi,
-                ];
-
-                $simpan = DB::table('presensi')->insert($data);
-                if ($simpan) {
-                    echo 'success|Terimakasih, selamat bekerja!|in';
-                    Storage::disk('public')->put($file, $image_base64);
+                if ($jam < $jamkerja->awal_jam_masuk) {
+                    echo "error|Maaf Belum Waktunya Melakukan Presensi|in";
+                } else if ($jam > $jamkerja->akhir_jam_masuk) {
+                    echo "error|Maaf Waktu Presensi Sudah Habis|in";
                 } else {
-                    echo 'error|Maaf presensi gagal, silahkan hubungi IT|in';
+                    $data = [
+                        'nik' => $nik,
+                        'tanggal_presensi' => $tgl_presensi,
+                        'jam_in' => $jam,
+                        'foto_in' => $fileName,
+                        'lokasi_in' => $lokasi,
+                    ];
+
+                    $simpan = DB::table('presensi')->insert($data);
+                    if ($simpan) {
+                        echo 'success|Terimakasih, selamat bekerja!|in';
+                        Storage::disk('public')->put($file, $image_base64);
+                    } else {
+                        echo 'error|Maaf presensi gagal, silahkan hubungi IT|in';
+                    }
                 }
             }
         }
