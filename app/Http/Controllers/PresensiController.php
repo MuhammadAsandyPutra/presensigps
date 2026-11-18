@@ -167,6 +167,7 @@ class PresensiController extends Controller
                         'jam_in' => $jam,
                         'foto_in' => $fileName,
                         'lokasi_in' => $lokasi,
+                        'kode_jam_kerja' => $jamkerja->kode_jam_kerja,
                     ];
 
                     $simpan = DB::table('presensi')->insert($data);
@@ -379,8 +380,12 @@ class PresensiController extends Controller
             ->select(
                 'presensi.*',
                 'karyawan.nama_lengkap',
-                'departemen.nama_dept'
+                'departemen.nama_dept',
+                'jam_masuk',
+                'nama_jam_kerja',
+                'jam_pulang',
             )
+            ->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
             ->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
             ->join('departemen', 'karyawan.kode_dept', '=', 'departemen.kode_dept')
             ->where('presensi.tanggal_presensi', $tanggal)
@@ -424,6 +429,7 @@ class PresensiController extends Controller
             ->first();
 
         $presensi = DB::table('presensi')
+            ->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
             ->where('nik', $nik)
             ->whereRaw('MONTH(tanggal_presensi)="' . $bulan . '"')
             ->whereRaw('YEAR(tanggal_presensi)="' . $tahun . '"')
@@ -456,7 +462,12 @@ class PresensiController extends Controller
         $tahun = $request->tahun;
 
         $rekap = DB::table('presensi')
-            ->selectRaw('presensi.nik,nama_lengkap,
+            ->selectRaw('
+                    presensi.nik,
+                    MAX(karyawan.nama_lengkap) AS nama_lengkap,
+                    MAX(jam_kerja.jam_masuk) AS jam_masuk,
+                    MAX(jam_kerja.jam_pulang) AS jam_pulang,
+
                     MAX(IF(DAY(tanggal_presensi) = 1,CONCAT(jam_in,"-",iFNULL(jam_out,"00:00:00")),"")) as tgl_1,
                     MAX(IF(DAY(tanggal_presensi) = 2,CONCAT(jam_in,"-",iFNULL(jam_out,"00:00:00")),"")) as tgl_2,
                     MAX(IF(DAY(tanggal_presensi) = 3,CONCAT(jam_in,"-",iFNULL(jam_out,"00:00:00")),"")) as tgl_3,
@@ -489,9 +500,10 @@ class PresensiController extends Controller
                     MAX(IF(DAY(tanggal_presensi) = 30,CONCAT(jam_in,"-",iFNULL(jam_out,"00:00:00")),"")) as tgl_30,
                     MAX(IF(DAY(tanggal_presensi) = 31,CONCAT(jam_in,"-",iFNULL(jam_out,"00:00:00")),"")) as tgl_31')
             ->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
+            ->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
             ->whereRaw('MONTH(tanggal_presensi)="' . $bulan . '"')
             ->whereRaw('YEAR(tanggal_presensi)="' . $tahun . '"')
-            ->groupByRaw('presensi.nik,nama_lengkap')
+            ->groupBy('presensi.nik')
             ->get();
 
         if (isset($_POST['exportexcel'])) {

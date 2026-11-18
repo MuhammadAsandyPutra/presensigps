@@ -500,7 +500,7 @@
                         // Hitung keterlambatan
                         if (
                         !empty($jamMasuk) &&
-                        $jamMasuk > '09:00:00'
+                        $jamMasuk > '$d -> jam_masuk'
                         ) {
                         $totalTerlambat++;
                         }
@@ -511,7 +511,7 @@
 
                             @if (!empty($nilai))
 
-                            <span class="jam-masuk {{ $jamMasuk > '09:00:00' ? 'terlambat' : '' }}">
+                            <span class="jam-masuk {{ $jamMasuk > $d -> jam_masuk ? 'terlambat' : '' }}">
                                 {{ substr($jamMasuk, 0, 5) }}
                             </span>
 

@@ -19,6 +19,7 @@ class DashboardController extends Controller
             ->where('tanggal_presensi', $hariini)
             ->first();
         $historibulanini = DB::table('presensi')
+            ->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
             ->where('nik', $nik)
             ->whereRaw('MONTH(tanggal_presensi)="' . $bulanini . '"')
             ->whereRaw('YEAR(tanggal_presensi)="' . $tahunini . '"')
@@ -35,8 +36,8 @@ class DashboardController extends Controller
         $rekappresensi = DB::table('presensi')
             ->selectRaw("
         COUNT(nik) as jmlhadir,
-        SUM(IF(jam_in > '09:00:00', 1, 0)) as jmlterlambat
-    ")
+        SUM(IF(jam_in > jam_masuk, 1, 0)) as jmlterlambat
+    ")->leftJoin('jam_kerja', 'presensi.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
             ->where('nik', $nik)
             ->whereMonth('tanggal_presensi', $bulanini)
             ->whereYear('tanggal_presensi', $tahunini)

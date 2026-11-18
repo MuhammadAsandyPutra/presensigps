@@ -235,8 +235,9 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            margin-top: 45px;
+            margin-top: 35px;
             page-break-inside: avoid;
+            break-inside: avoid;
         }
 
         .ttd-hrd {
@@ -244,6 +245,12 @@
             text-align: center;
             font-size: 12px;
             line-height: 1.5;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .ttd-hrd .ruang-ttd {
+            height: 85px;
         }
 
         .ttd-hrd .tanggal {
@@ -283,6 +290,25 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            .ttd-wrapper {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .ttd-hrd {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            #tabelpresensi {
+                page-break-inside: auto;
+            }
+
+            #tabelpresensi tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
         }
 
         /* PRINT */
@@ -301,19 +327,25 @@
 <body class="A4">
 
     <?php
-    function selisih($jam_masuk, $jam_keluar)
+    function selisih($jam_awal, $jam_akhir)
     {
-        list($h, $m, $s) = explode(":", $jam_masuk);
-        $dtAwal = mktime($h, $m, $s, "1", "1", "1");
-        list($h, $m, $s) = explode(":", $jam_keluar);
-        $dtAkhir = mktime($h, $m, $s, "1", "1", "1");
-        $dtSelisih = $dtAkhir - $dtAwal;
-        $totalmenit = $dtSelisih / 60;
-        $jam = explode(".", $totalmenit / 60);
-        $sisamenit = ($totalmenit / 60) - $jam[0];
-        $sisamenit2 = $sisamenit * 60;
-        $jml_jam = $jam[0];
-        return $jml_jam . ":" . round($sisamenit2);
+        if (empty($jam_awal) || empty($jam_akhir)) {
+            return "0:00";
+        }
+
+        $awal = strtotime($jam_awal);
+        $akhir = strtotime($jam_akhir);
+
+        if ($awal === false || $akhir === false) {
+            return "0:00";
+        }
+
+        $totalDetik = max(0, $akhir - $awal);
+
+        $jam = floor($totalDetik / 3600);
+        $menit = floor(($totalDetik % 3600) / 60);
+
+        return $jam . ":" . str_pad($menit, 2, "0", STR_PAD_LEFT);
     }
     ?>
 
@@ -420,7 +452,7 @@
             @php
             $path_in = Storage::url('uploads/absensi/'.$d->foto_in);
             $path_out = Storage::url('uploads/absensi/'.$d->foto_out);
-            $jamterlambat = selisih('09:00:00', $d -> jam_in)
+            $jamterlambat = selisih($d -> jam_masuk, $d -> jam_in)
             @endphp
             <tr>
                 <td>{{$loop -> iteration}}</td>
@@ -441,7 +473,7 @@
 
                 </td>
 
-                <td>@if ($d -> jam_in > '09:00')
+                <td>@if ($d -> jam_in > $d-> jam_masuk)
                     Terlambat {{$jamterlambat}}
                     @else
                     Tepat Waktu

@@ -352,7 +352,7 @@
             </div>
             <div class="tab-content mt-2" style="margin-bottom:100px;">
                 <div class="tab-pane fade show active" id="home" role="tabpanel">
-                    <ul class="listview image-listview">
+                    <!-- <ul class="listview image-listview">
                         @foreach($historibulanini as $d)
                         @php
                         $path = Storage::url('/uploads/absensi/'.$d->foto_in);
@@ -386,7 +386,7 @@
 
 
 
-                        <!-- <li>
+                        <li>
                             <div class="item">
                                 <div class="icon-box bg-primary">
                                     <ion-icon name="finger-print-outline"></ion-icon>
@@ -397,9 +397,87 @@
                                     <span class="badge badge-danger">{{ $d->jam_out }}</span>
                                 </div>
                             </div>
-                        </li> -->
+                        </li>
                         @endforeach
-                    </ul>
+                    </ul> -->
+                    <style>
+                        .historicontent {
+                            display: flex;
+                        }
+
+                        .datapresensi {
+                            margin-left: 10px;
+
+                        }
+                    </style>
+                    @foreach ($historibulanini as $d )
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="historicontent">
+                                <div class="iconpresensi">
+                                    <ion-icon name="finger-print-outline" style="font-size: 48px;" class="text-success"></ion-icon>
+                                </div>
+                                <div class="datapresensi">
+                                    <h3 style="line-height:3px;">{{$d -> nama_jam_kerja}}</h3>
+                                    <h4 style="margin:0px !important">{{date("d-m-Y", strtotime($d->tanggal_presensi))}}</h4>
+                                    <span>
+                                        {!! $d -> jam_in != null ? date('H:i', strtotime($d -> jam_in)) : '<span class="text-danger">Belum Presensi</span>' !!}
+                                    </span>
+                                    <span>
+                                        {!! $d -> jam_out != null ? "-" . date('H:i', strtotime($d -> jam_out)) : '<span class="text-danger">- Belum Pulang</span>' !!}
+                                    </span>
+
+                                    <div class="keterangan mt-2">
+                                        @if(!empty($d->jam_in) && !empty($d->jam_masuk))
+
+                                        @php
+                                        // Waktu jadwal masuk
+                                        $jadwalMasuk = strtotime(
+                                        $d->tanggal_presensi . ' ' . $d->jam_masuk
+                                        );
+
+                                        // Waktu aktual presensi masuk
+                                        $presensiMasuk = strtotime(
+                                        $d->tanggal_presensi . ' ' . $d->jam_in
+                                        );
+
+                                        // Hitung selisih dalam detik
+                                        $selisihDetik = max(0, $presensiMasuk - $jadwalMasuk);
+
+                                        // Konversi menjadi jam dan menit
+                                        $jamTerlambat = intdiv($selisihDetik, 3600);
+                                        $menitTerlambat = intdiv($selisihDetik % 3600, 60);
+                                        @endphp
+
+                                        @if($selisihDetik > 0)
+                                        <span class="text-danger">
+                                            <ion-icon name="time-outline"></ion-icon>
+                                            Terlambat
+
+                                            @if($jamTerlambat > 0)
+                                            {{ $jamTerlambat }} jam
+                                            @endif
+
+                                            @if($menitTerlambat > 0)
+                                            {{ $menitTerlambat }} menit
+                                            @endif
+                                        </span>
+                                        @else
+                                        <span class="text-success">
+                                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                                            Tepat Waktu
+                                        </span>
+                                        @endif
+
+                                        @else
+                                        <span class="text-muted">Data jadwal atau presensi belum tersedia</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel">
                     <ul class="listview image-listview">
